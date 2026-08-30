@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>icir_panda_husky_description</name>
+  <version>0.1.0</version>
+  <description>panda_husky mobile manipulator URDF description</description>
+
+  <author email="js.park@cnu.ac.kr">Jinseong Park</author>
+  <maintainer email="js.park@cnu.ac.kr">Jinseong Park</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- 기존 ROS1 package.xml의 run_depend를 1:1 미러링 (구성 그대로 유지) -->
+  <exec_depend>realsense2_description</exec_depend>
+  <exec_depend>urdf</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>lms1xx</exec_depend>
+
+  <!-- 실제 조립 URDF가 참조하는 로컬 부품 패키지 (빌드 순서용) -->
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>icir_panda_description</exec_depend>
+  <exec_depend>icir_robotiq_2f_85_description</exec_depend>
+
+  <!-- view_robot.launch.py (뷰어) 실행 의존 -->
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>joint_state_publisher_gui</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
