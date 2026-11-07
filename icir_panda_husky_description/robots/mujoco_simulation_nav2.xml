@@ -1,0 +1,69 @@
+<mujoco model="husky_nav2">
+	<option noslip_iterations="70" />
+	<size njmax="8000" nconmax="4000"/>
+	<option timestep="0.001"/>
+
+	<include file="../robots/husky_panda_hand.xml"/>
+	<asset>
+		<texture name="floor_tex" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 .2 .3" width="100" height="100" />
+		<material name="floor_material" texture="floor_tex" texuniform="true" />
+	</asset>
+	<visual>
+        <map force="0.1"/>
+    </visual>
+
+	<default>
+        <default class ="viz">
+            <geom contype="0" conaffinity="0" group="1" type="mesh" rgba=".6 .6 .7 1" />
+        </default>
+        <default class="cls">
+            <geom group="2" rgba="0.79216 0.81961 0.93333 0.5"/>
+        </default>
+    </default>
+
+	<worldbody>
+		<geom name="ground" type="plane" size="12 12 1" pos="3.5 0 -0.25"  material="floor_material" condim="6"/>
+
+		<light directional="false" diffuse=".6 .6 .6" specular="0.3 0.3 0.3" pos="0 0 4" dir="0 0 -1"/>
+		<light directional="false" diffuse=".6 .6 .6" specular="0.3 0.3 0.3" pos="3.5 0 4" dir="0 0 -1"/>
+		<light directional="false" diffuse=".6 .6 .6" specular="0.3 0.3 0.3" pos="7 0 4" dir="0 0 -1"/>
+
+		<!-- 외벽: 높이 1 m (z -0.25 ~ 0.75), 두께 0.1 m -->
+		<body>
+			<geom class="cls" name="obs_wall_n" type="box" pos="3.5 4.05 0.25"  size="6.1 0.05 0.5" contype="1" conaffinity="1"/>
+			<geom class="viz"                   type="box" pos="3.5 4.05 0.25"  size="6.1 0.05 0.5" rgba="0.7 0.7 0.7 1"/>
+			<geom class="cls" name="obs_wall_s" type="box" pos="3.5 -4.05 0.25" size="6.1 0.05 0.5" contype="1" conaffinity="1"/>
+			<geom class="viz"                   type="box" pos="3.5 -4.05 0.25" size="6.1 0.05 0.5" rgba="0.7 0.7 0.7 1"/>
+			<geom class="cls" name="obs_wall_w" type="box" pos="-2.55 0 0.25"   size="0.05 4.1 0.5" contype="1" conaffinity="1"/>
+			<geom class="viz"                   type="box" pos="-2.55 0 0.25"   size="0.05 4.1 0.5" rgba="0.7 0.7 0.7 1"/>
+			<geom class="cls" name="obs_wall_e" type="box" pos="9.55 0 0.25"    size="0.05 4.1 0.5" contype="1" conaffinity="1"/>
+			<geom class="viz"                   type="box" pos="9.55 0 0.25"    size="0.05 4.1 0.5" rgba="0.7 0.7 0.7 1"/>
+		</body>
+
+		<!-- 칸막이: x=4.5, 문은 y -1.0 ~ 1.0 -->
+		<body>
+			<geom class="cls" name="obs_partition_s" type="box" pos="4.5 -2.5 0.25" size="0.05 1.5 0.5" contype="1" conaffinity="1"/>
+			<geom class="viz"                        type="box" pos="4.5 -2.5 0.25" size="0.05 1.5 0.5" rgba="0.5 0.5 0.55 1"/>
+			<geom class="cls" name="obs_partition_n" type="box" pos="4.5 2.5 0.25"  size="0.05 1.5 0.5" contype="1" conaffinity="1"/>
+			<geom class="viz"                        type="box" pos="4.5 2.5 0.25"  size="0.05 1.5 0.5" rgba="0.5 0.5 0.55 1"/>
+		</body>
+
+		<!-- 박스/기둥 -->
+		<body>
+			<geom class="cls" name="obs_box1" type="box" pos="1.8 2.2 0.25"  size="0.35 0.35 0.5" contype="1" conaffinity="1"/>
+			<geom class="viz"                 type="box" pos="1.8 2.2 0.25"  size="0.35 0.35 0.5" rgba="0.6 0.3 0. 1"/>
+			<geom class="cls" name="obs_box2" type="box" pos="2.2 -2.3 0.25" size="0.5 0.3 0.5"   contype="1" conaffinity="1"/>
+			<geom class="viz"                 type="box" pos="2.2 -2.3 0.25" size="0.5 0.3 0.5"   rgba="0.6 0.3 0. 1"/>
+			<geom class="cls" name="obs_box3" type="box" pos="6.8 2.0 0.25"  size="0.3 0.7 0.5"   contype="1" conaffinity="1"/>
+			<geom class="viz"                 type="box" pos="6.8 2.0 0.25"  size="0.3 0.7 0.5"   rgba="0.6 0.3 0. 1"/>
+			<geom class="cls" name="obs_box4" type="box" pos="7.6 -2.2 0.25" size="0.4 0.4 0.5"   contype="1" conaffinity="1"/>
+			<geom class="viz"                 type="box" pos="7.6 -2.2 0.25" size="0.4 0.4 0.5"   rgba="0.6 0.3 0. 1"/>
+			<geom class="cls" name="obs_pillar1" type="box" pos="6.5 -0.3 0.25" size="0.15 0.15 0.5" contype="1" conaffinity="1"/>
+			<geom class="viz"                    type="box" pos="6.5 -0.3 0.25" size="0.15 0.15 0.5" rgba="0.3 0.3 0. 1"/>
+		</body>
+	</worldbody>
+
+	<sensor>
+		<rangefinder name="lidar" site="lidar_rf"/>
+	</sensor>
+</mujoco>
