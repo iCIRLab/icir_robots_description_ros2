@@ -66,4 +66,21 @@
 	<sensor>
 		<rangefinder name="lidar" site="lidar_rf"/>
 	</sensor>
+
+	<!-- Nav2 (base only): arm locked at home (q_ref_), i.e. one rigid body on the base -->
+	<equality>
+		<joint joint1="panda_joint1" polycoef="0 0 0 0 0"                   solref="0.005 1"/>
+		<joint joint1="panda_joint2" polycoef="0 0 0 0 0"                   solref="0.005 1"/>
+		<joint joint1="panda_joint3" polycoef="0 0 0 0 0"                   solref="0.005 1"/>
+		<joint joint1="panda_joint4" polycoef="-1.5707963267948966 0 0 0 0" solref="0.005 1"/>
+		<joint joint1="panda_joint5" polycoef="0 0 0 0 0"                   solref="0.005 1"/>
+		<joint joint1="panda_joint6" polycoef="1.5707963267948966 0 0 0 0"  solref="0.005 1"/>
+		<joint joint1="panda_joint7" polycoef="-0.7853981633974483 0 0 0 0" solref="0.005 1"/>
+	</equality>
+
+	<!-- start at home so the lock does not snap the arm (launch: initial_keyframe) -->
+	<keyframe>
+		<!-- free joint (7), wheels (4), panda_joint1-7, fingers (2) -->
+		<key name="home" qpos="0 0 0 1 0 0 0  0 0 0 0  0 0 0 -1.5707963267948966 0 1.5707963267948966 -0.7853981633974483  0 0"/>
+	</keyframe>
 </mujoco>
